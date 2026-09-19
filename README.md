@@ -1,12 +1,22 @@
-# YMart · Operations platform
+# YMart: operations platform architecture
 
-**System architecture, full-stack engineering and AWS delivery.**
+Supplier price lists need review before they become storefront updates, and approval is not the same as a successful external write. YMart makes that process explicit: ingest a workbook, review proposed changes, apply approved items and inspect the outcome of each write.
 
-I designed and built an operations platform connecting supplier spreadsheets, a distribution ERP and an e-commerce storefront. It turns incoming price lists into reviewable proposals, exposes catalogue quality issues and tracks price changes through approval and application.
+I am [Artem Polovyi](https://github.com/apolovyi), the platform's designer and developer. My work spans application architecture, backend integrations, the YourMix operations workspace, asynchronous ingestion, infrastructure and delivery. The ERP and storefront retain ownership of their records; YMart owns the workflow between them.
 
-The work spans Kotlin/Spring backend services, a React operations workspace, asynchronous ingestion, Terraform infrastructure, CI/CD and observability.
+## Engineering decisions
+
+- **Explicit boundaries without a deployment per module.** I chose a modular monolith with declared module dependencies and ports/adapters. Spring Modulith and ArchUnit check the boundaries, while one backend deployment keeps the operational footprint proportionate to the application.
+- **Separate business decisions from external outcomes.** Approval and application are different state transitions. Items retain old and proposed values, overrides, audit records and write outcomes, making partial success and individual failures inspectable rather than treating the workflow as a single batch write. Retry and compensating revert paths operate on those recorded outcomes.
+- **Isolate file processing as a distinct workload.** S3 decouples upload from parsing; a Lambda detects workbook formats and normalizes rows into backend proposals. Operators follow processing status without holding a long-running upload request open. Parsing has its own runtime because its workload and dependencies differ from the application core.
+- **Keep operational queries independent of vendor requests.** Local catalogue projections support filtering and quality inspection without a storefront round trip for every interaction, with synchronization freshness and failures tracked explicitly. Integration adapters handle endpoint defects, verify returned product identities and reject ambiguous matches rather than silently selecting a product.
+- **Design delivery alongside the application.** Infrastructure definitions, database migrations, API compatibility checks and generated frontend contracts connect changes across layers. Deployment uses AWS OIDC federation; logs and synchronization health expose different failure surfaces. The architecture case study describes the actual deployment paths and their trade-offs.
+
+[Read the architecture case study](ARCHITECTURE.md) for application boundaries, ERP connectivity, ingestion, infrastructure and operational trade-offs.
 
 ## System design
+
+The implementation combines a Kotlin/Spring backend, PostgreSQL, a React operations workspace, TypeScript ingestion and Terraform-managed AWS.
 
 ```mermaid
 flowchart TB
@@ -16,17 +26,7 @@ flowchart TB
     API -->|"Catalogue reads and<br/>price updates"| SHOP["CS-Cart<br/>Storefront"]
 ```
 
-Supplier files flow through **S3 → TypeScript Lambda → backend proposals**. The backend runs on AWS App Runner, with infrastructure managed through Terraform and container delivery through GitHub Actions and ECR.
-
-## Engineering decisions
-
-- **Modular monolith over microservices.** Business modules and ports/adapters give the backend explicit, testable boundaries without multiplying deployments. Spring Modulith and ArchUnit check those boundaries.
-- **Integration beyond API wrappers.** Adapters handle storefront API defects, verify returned product identities and isolate ERP session handling. A regional proxy addresses the ERP's connectivity constraint.
-- **Workflows rather than blind batch writes.** Pricing separates review decisions from application outcomes, retaining old values, item-level failures, audit records, retries and compensating reverts.
-- **Local projections for operational queries.** Catalogue data is synchronized into PostgreSQL so filtering and analysis do not require a storefront round trip for every interaction.
-- **Delivery designed alongside the application.** OpenAPI compatibility checks, generated frontend types, database migrations, AWS OIDC authentication and centralized logs connect development to operation.
-
-[Read the architecture case study](ARCHITECTURE.md) for the ingestion flow, infrastructure, delivery paths and trade-offs.
+Supplier files flow through S3, the parser Lambda and backend proposals. The backend runs on AWS App Runner, with container delivery through GitHub Actions and ECR.
 
 ## Explore the implementation
 
