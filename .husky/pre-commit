@@ -1,0 +1,6 @@
+# Global fleet gates (chained; no-op on machines without ~/.claude/git-hooks)
+if [ -x "$HOME/.claude/git-hooks/pre-commit" ]; then
+  "$HOME/.claude/git-hooks/pre-commit" "$@" || exit 1
+fi
+
+pnpm exec lint-staged

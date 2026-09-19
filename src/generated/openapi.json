@@ -1,0 +1,3382 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "YMart Backend API",
+    "description": "BFF for the YourMix operations platform",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8050",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "logistics",
+      "description": "Sales orders and distribution logistics (Acumatica read-only)"
+    }
+  ],
+  "paths": {
+    "/api/pricing/suppliers/{id}": {
+      "get": {
+        "tags": ["supplier-controller"],
+        "operationId": "getSupplier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupplierResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["supplier-controller"],
+        "operationId": "updateSupplier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSupplierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupplierResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["supplier-controller"],
+        "operationId": "deleteSupplier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/pricing/proposals/{id}/items/{itemId}/override": {
+      "put": {
+        "tags": ["proposal-approval-controller"],
+        "operationId": "overrideItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OverrideRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalItemResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/proposals/{id}/items/{itemId}/map": {
+      "put": {
+        "tags": ["proposal-approval-controller"],
+        "operationId": "mapItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MapRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalItemResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/products/{id}/price": {
+      "put": {
+        "tags": ["pricing-controller"],
+        "operationId": "updatePrice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "confirm",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PriceUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceUpdateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/margins/{id}": {
+      "put": {
+        "tags": ["margin-rule-controller"],
+        "operationId": "updateMarginRule",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMarginRuleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarginRuleResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["margin-rule-controller"],
+        "operationId": "deleteMarginRule",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/pricing/webhook/parse-result": {
+      "post": {
+        "tags": ["webhook-controller"],
+        "operationId": "receiveParseResult",
+        "parameters": [
+          {
+            "name": "X-Parser-Secret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParseResultWebhook"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/upload": {
+      "post": {
+        "tags": ["pricing-controller"],
+        "operationId": "uploadFile",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": ["file"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/suppliers": {
+      "get": {
+        "tags": ["supplier-controller"],
+        "operationId": "getSuppliers",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "all"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SupplierResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["supplier-controller"],
+        "operationId": "createSupplier",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSupplierRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupplierResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/proposals/{id}/revert": {
+      "post": {
+        "tags": ["proposal-approval-controller"],
+        "operationId": "revertProposal",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevertResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/proposals/{id}/reject": {
+      "post": {
+        "tags": ["proposal-approval-controller"],
+        "operationId": "rejectProposal",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/proposals/{id}/items/{itemId}/reject": {
+      "post": {
+        "tags": ["proposal-approval-controller"],
+        "operationId": "rejectItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalItemResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/proposals/{id}/items/{itemId}/approve": {
+      "post": {
+        "tags": ["proposal-approval-controller"],
+        "operationId": "approveItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalItemResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/proposals/{id}/approve": {
+      "post": {
+        "tags": ["proposal-approval-controller"],
+        "operationId": "approveProposal",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/margins": {
+      "get": {
+        "tags": ["margin-rule-controller"],
+        "operationId": "getMarginRules",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MarginRuleResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["margin-rule-controller"],
+        "operationId": "createMarginRule",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMarginRuleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarginRuleResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/margin/calculate": {
+      "post": {
+        "tags": ["pricing-controller"],
+        "operationId": "calculateMargin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarginCalculationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarginCalculationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/files/{fileId}/retry": {
+      "post": {
+        "tags": ["pricing-controller"],
+        "operationId": "retryFile",
+        "parameters": [
+          {
+            "name": "fileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "tags": ["auth-controller"],
+        "operationId": "refresh",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["auth-controller"],
+        "operationId": "logout",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["auth-controller"],
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/proposals": {
+      "get": {
+        "tags": ["pricing-controller"],
+        "operationId": "getProposals",
+        "parameters": [
+          {
+            "name": "product",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProposalResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/proposals/{id}": {
+      "get": {
+        "tags": ["pricing-controller"],
+        "operationId": "getProposal",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/proposals/{id}/items": {
+      "get": {
+        "tags": ["pricing-controller"],
+        "operationId": "getProposalItems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProposalItemResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/products/{cscartId}/history": {
+      "get": {
+        "tags": ["pricing-controller"],
+        "operationId": "getProductPriceHistory",
+        "parameters": [
+          {
+            "name": "cscartId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResultPriceHistoryEntry"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/products/multi-supplier": {
+      "get": {
+        "tags": ["pricing-controller"],
+        "operationId": "getMultiSupplierProducts",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResultMultiSupplierProduct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/files/{fileId}/status": {
+      "get": {
+        "tags": ["pricing-controller"],
+        "operationId": "getFileStatus",
+        "parameters": [
+          {
+            "name": "fileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/files/recent": {
+      "get": {
+        "tags": ["pricing-controller"],
+        "operationId": "getRecentFiles",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FileStatusResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/failures/summary": {
+      "get": {
+        "tags": ["pricing-controller"],
+        "operationId": "getFailureSummary",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FailureSummary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/categories": {
+      "get": {
+        "tags": ["pricing-controller"],
+        "operationId": "getCategories",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategorySuggestionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pricing/categories/unmatched": {
+      "get": {
+        "tags": ["pricing-controller"],
+        "operationId": "getUnmatchedCategories",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnmatchedCategoriesResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ping": {
+      "get": {
+        "tags": ["health-controller"],
+        "operationId": "ping",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/logistics/pricing-feed": {
+      "get": {
+        "tags": ["logistics"],
+        "summary": "List distribution pricing tiers",
+        "description": "Groups Acumatica customer accounts into effective pricing tiers for downstream wholesale-vs-retail mapping",
+        "operationId": "listDistributionPricingFeed",
+        "parameters": [
+          {
+            "name": "customerClass",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceClassId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistributionPriceTierListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/logistics/orders": {
+      "get": {
+        "tags": ["logistics"],
+        "summary": "List sales orders",
+        "description": "Fetches live orders from Acumatica ERP and overlays local warehouse/delivery workflow status when available",
+        "operationId": "listOrders",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/logistics/orders/{orderNbr}": {
+      "get": {
+        "tags": ["logistics"],
+        "summary": "Get order by order number",
+        "description": "Fetches order detail including line items from Acumatica ERP and overlays local warehouse/delivery workflow status when available",
+        "operationId": "getOrder",
+        "parameters": [
+          {
+            "name": "orderNbr",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDetailResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/logistics/customers": {
+      "get": {
+        "tags": ["logistics"],
+        "summary": "List distribution customer pricing accounts",
+        "description": "Fetches Acumatica customers and derives effective pricing tiers for downstream feeds",
+        "operationId": "listCustomers",
+        "parameters": [
+          {
+            "name": "customerClass",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priceClassId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistributionCustomerListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalog/vendors": {
+      "get": {
+        "tags": ["catalog-controller"],
+        "operationId": "listVendors",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VendorListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalog/products": {
+      "get": {
+        "tags": ["catalog-controller"],
+        "operationId": "listProducts",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["ACTIVE", "HIDDEN", "DISABLED"]
+            }
+          },
+          {
+            "name": "priceMin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "priceMax",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "vendor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "storefrontStatus",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["REACHABLE", "UNREACHABLE", "HIDDEN", "DISABLED"]
+            }
+          },
+          {
+            "name": "issue",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "BELOW_COST",
+                "OOS_ACTIVE",
+                "LOW_STOCK",
+                "NO_IMAGE",
+                "NO_CATEGORY",
+                "DUPLICATE_SKU",
+                "NO_COST",
+                "STALE"
+              ]
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "UPDATED",
+              "enum": ["NAME", "PRICE", "MARGIN", "STOCK", "UPDATED"]
+            }
+          },
+          {
+            "name": "sortDir",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "DESC",
+              "enum": ["ASC", "DESC"]
+            }
+          },
+          {
+            "name": "identityStatus",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["MATCHED", "AMBIGUOUS", "UNMAPPED"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalog/products/{id}": {
+      "get": {
+        "tags": ["catalog-controller"],
+        "operationId": "getProduct",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalog/products/summary": {
+      "get": {
+        "tags": ["catalog-controller"],
+        "operationId": "getProductSummary",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductSummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalog/products/search": {
+      "get": {
+        "tags": ["catalog-controller"],
+        "operationId": "findProductBySku",
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalog/identities": {
+      "get": {
+        "tags": ["catalog-controller"],
+        "operationId": "listCatalogIdentities",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          },
+          {
+            "name": "sku",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["ACTIVE", "HIDDEN", "DISABLED"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogIdentityProjectionListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalog/identities/{cscartProductId}": {
+      "get": {
+        "tags": ["catalog-controller"],
+        "operationId": "getCatalogIdentity",
+        "parameters": [
+          {
+            "name": "cscartProductId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogIdentityProjectionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalog/identities/summary": {
+      "get": {
+        "tags": ["catalog-controller"],
+        "operationId": "getCatalogIdentitySummary",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogIdentityProjectionSummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalog/categories": {
+      "get": {
+        "tags": ["catalog-controller"],
+        "operationId": "listCategories",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/audit": {
+      "get": {
+        "tags": ["audit-controller"],
+        "operationId": "getAuditLogs",
+        "parameters": [
+          {
+            "name": "entityType",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "entityId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditPageResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UpdateSupplierRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "emailDomain": {
+            "type": ["string", "null"]
+          },
+          "fileFormat": {
+            "type": ["string", "null"]
+          },
+          "parserType": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          }
+        },
+        "required": ["active", "name", "parserType"]
+      },
+      "SupplierResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "emailDomain": {
+            "type": ["string", "null"]
+          },
+          "fileFormat": {
+            "type": ["string", "null"]
+          },
+          "parserType": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          }
+        },
+        "required": ["active", "id", "name", "parserType"]
+      },
+      "OverrideRequest": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "number"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": ["price", "reason"]
+      },
+      "ProposalItemResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "proposalId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "supplierCode": {
+            "type": "string"
+          },
+          "supplierProductName": {
+            "type": ["string", "null"]
+          },
+          "supplierName": {
+            "type": ["string", "null"]
+          },
+          "category": {
+            "type": ["string", "null"]
+          },
+          "packing": {
+            "type": ["string", "null"]
+          },
+          "barcode": {
+            "type": ["string", "null"]
+          },
+          "cscartProductId": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "cscartProductName": {
+            "type": ["string", "null"]
+          },
+          "costPrice": {
+            "type": "number"
+          },
+          "currentPrice": {
+            "type": ["number", "null"]
+          },
+          "proposedPrice": {
+            "type": "number"
+          },
+          "changePct": {
+            "type": ["number", "null"]
+          },
+          "marginPct": {
+            "type": ["number", "null"]
+          },
+          "approvalStatus": {
+            "type": "string",
+            "enum": ["AUTO_APPROVED", "PENDING_REVIEW", "APPROVED", "REJECTED", "BLOCKED"]
+          },
+          "requiresReview": {
+            "type": "boolean"
+          },
+          "reviewReason": {
+            "type": ["string", "null"],
+            "enum": [
+              "UNMATCHED",
+              "SUGGESTED_MATCH",
+              "LARGE_INCREASE",
+              "LARGE_DECREASE",
+              "NEGATIVE_MARGIN",
+              "MISSING_COST"
+            ]
+          },
+          "updateStatus": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "PROCESSING",
+              "APPLIED",
+              "FAILED",
+              "SKIPPED",
+              "REVERTED",
+              "REVERT_FAILED"
+            ]
+          },
+          "overridePrice": {
+            "type": ["number", "null"]
+          },
+          "overrideReason": {
+            "type": ["string", "null"]
+          },
+          "errorMessage": {
+            "type": ["string", "null"]
+          },
+          "appliedAt": {
+            "type": ["string", "null"]
+          },
+          "updateAttempts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lastAttemptAt": {
+            "type": ["string", "null"]
+          }
+        },
+        "required": [
+          "approvalStatus",
+          "costPrice",
+          "id",
+          "proposalId",
+          "proposedPrice",
+          "requiresReview",
+          "supplierCode",
+          "updateAttempts",
+          "updateStatus"
+        ]
+      },
+      "MapRequest": {
+        "type": "object",
+        "properties": {
+          "cscartProductId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": ["cscartProductId"]
+      },
+      "PriceUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "newPrice": {
+            "type": "number"
+          }
+        },
+        "required": ["newPrice"]
+      },
+      "PriceUpdateResponse": {
+        "type": "object",
+        "properties": {
+          "cscartProductId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentPrice": {
+            "type": "number"
+          },
+          "proposedPrice": {
+            "type": "number"
+          },
+          "applied": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["applied", "cscartProductId", "currentPrice", "message", "proposedPrice"]
+      },
+      "UpdateMarginRuleRequest": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": ["string", "null"]
+          },
+          "supplierId": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          },
+          "marginPct": {
+            "type": "number"
+          },
+          "effectiveFrom": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": ["effectiveFrom", "marginPct"]
+      },
+      "MarginRuleResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "category": {
+            "type": ["string", "null"]
+          },
+          "supplierId": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          },
+          "supplierName": {
+            "type": ["string", "null"]
+          },
+          "marginPct": {
+            "type": "number"
+          },
+          "effectiveFrom": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          }
+        },
+        "required": ["effectiveFrom", "id", "marginPct"]
+      },
+      "ParseErrorDto": {
+        "type": "object",
+        "properties": {
+          "row": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          }
+        },
+        "required": ["message", "severity"]
+      },
+      "ParseResultWebhook": {
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "parserType": {
+            "type": "string"
+          },
+          "supplierId": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string"
+          },
+          "items": {
+            "type": ["array", "null"],
+            "items": {
+              "$ref": "#/components/schemas/ParsedItemDto"
+            }
+          },
+          "metadata": {
+            "type": ["object", "null"],
+            "additionalProperties": {}
+          },
+          "errors": {
+            "type": ["array", "null"],
+            "items": {
+              "$ref": "#/components/schemas/ParseErrorDto"
+            }
+          },
+          "fatalError": {
+            "type": ["string", "null"]
+          }
+        },
+        "required": ["fileId", "parserType", "status"]
+      },
+      "ParsedItemDto": {
+        "type": "object",
+        "properties": {
+          "supplierCode": {
+            "type": "string"
+          },
+          "productName": {
+            "type": ["string", "null"]
+          },
+          "costPrice": {
+            "type": "number"
+          },
+          "costPriceIncVat": {
+            "type": ["number", "null"]
+          },
+          "unitBarcode": {
+            "type": ["string", "null"]
+          },
+          "caseBarcode": {
+            "type": ["string", "null"]
+          },
+          "packing": {
+            "type": ["string", "null"]
+          },
+          "packUnit": {
+            "type": ["string", "null"]
+          },
+          "supplierName": {
+            "type": ["string", "null"]
+          },
+          "category": {
+            "type": ["string", "null"]
+          },
+          "rowNumber": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          }
+        },
+        "required": ["costPrice", "supplierCode"]
+      },
+      "UploadResponse": {
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["PENDING", "PARSING", "PARSED", "FAILED"]
+          }
+        },
+        "required": ["fileId", "filename", "status"]
+      },
+      "CreateSupplierRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "emailDomain": {
+            "type": ["string", "null"]
+          },
+          "fileFormat": {
+            "type": ["string", "null"]
+          },
+          "parserType": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "parserType"]
+      },
+      "RevertResponse": {
+        "type": "object",
+        "properties": {
+          "reverted": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failed": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": ["failed", "reverted"]
+      },
+      "FailedItemSummary": {
+        "type": "object",
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "productName": {
+            "type": ["string", "null"]
+          },
+          "supplierCode": {
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": ["string", "null"]
+          },
+          "updateAttempts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lastAttemptAt": {
+            "type": ["string", "null"]
+          }
+        },
+        "required": ["itemId", "supplierCode", "updateAttempts"]
+      },
+      "ProposalResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "supplierFileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "supplierFileName": {
+            "type": ["string", "null"]
+          },
+          "supplierName": {
+            "type": ["string", "null"]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "PENDING_REVIEW",
+              "APPROVED",
+              "APPLYING",
+              "APPLIED",
+              "PARTIALLY_APPLIED",
+              "REJECTED",
+              "REVERTED",
+              "PARTIALLY_REVERTED"
+            ]
+          },
+          "totalItems": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "matchedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unmatchedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "flaggedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "appliedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "reviewedBy": {
+            "type": ["string", "null"]
+          },
+          "approvedAt": {
+            "type": ["string", "null"]
+          },
+          "failedItems": {
+            "type": ["array", "null"],
+            "items": {
+              "$ref": "#/components/schemas/FailedItemSummary"
+            }
+          }
+        },
+        "required": [
+          "appliedCount",
+          "createdAt",
+          "failedCount",
+          "flaggedCount",
+          "id",
+          "matchedCount",
+          "status",
+          "supplierFileId",
+          "unmatchedCount"
+        ]
+      },
+      "CreateMarginRuleRequest": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": ["string", "null"]
+          },
+          "supplierId": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          },
+          "marginPct": {
+            "type": "number"
+          },
+          "effectiveFrom": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": ["effectiveFrom", "marginPct"]
+      },
+      "MarginCalculationRequest": {
+        "type": "object",
+        "properties": {
+          "costPrice": {
+            "type": "number"
+          },
+          "category": {
+            "type": "string"
+          },
+          "supplierId": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          }
+        },
+        "required": ["category", "costPrice"]
+      },
+      "MarginCalculationResponse": {
+        "type": "object",
+        "properties": {
+          "costPrice": {
+            "type": "number"
+          },
+          "sellPrice": {
+            "type": "number"
+          },
+          "marginPct": {
+            "type": "number"
+          },
+          "category": {
+            "type": "string"
+          }
+        },
+        "required": ["category", "costPrice", "marginPct", "sellPrice"]
+      },
+      "FileStatusResponse": {
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "parseStatus": {
+            "type": "string",
+            "enum": ["PENDING", "PARSING", "PARSED", "FAILED"]
+          },
+          "parseError": {
+            "type": ["string", "null"]
+          },
+          "proposalId": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          },
+          "uploadedAt": {
+            "type": ["string", "null"]
+          }
+        },
+        "required": ["fileId", "filename", "parseStatus"]
+      },
+      "RefreshRequest": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": ["refreshToken"]
+      },
+      "RefreshResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": ["accessToken", "refreshToken"]
+      },
+      "LogoutRequest": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": ["refreshToken"]
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "password"]
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserDto"
+          }
+        },
+        "required": ["accessToken", "refreshToken", "user"]
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "id", "name", "role"]
+      },
+      "PageResultPriceHistoryEntry": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PriceHistoryEntry"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PriceHistoryEntry": {
+        "type": "object",
+        "properties": {
+          "proposalId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "proposalDate": {
+            "type": "string"
+          },
+          "supplierName": {
+            "type": ["string", "null"]
+          },
+          "supplierProductName": {
+            "type": ["string", "null"]
+          },
+          "costPrice": {
+            "type": "number"
+          },
+          "previousPrice": {
+            "type": ["number", "null"]
+          },
+          "newPrice": {
+            "type": "number"
+          },
+          "marginPct": {
+            "type": ["number", "null"]
+          },
+          "changePct": {
+            "type": ["number", "null"]
+          },
+          "approvalStatus": {
+            "type": "string",
+            "enum": ["AUTO_APPROVED", "PENDING_REVIEW", "APPROVED", "REJECTED", "BLOCKED"]
+          },
+          "updateStatus": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "PROCESSING",
+              "APPLIED",
+              "FAILED",
+              "SKIPPED",
+              "REVERTED",
+              "REVERT_FAILED"
+            ]
+          },
+          "overridePrice": {
+            "type": ["number", "null"]
+          },
+          "overrideReason": {
+            "type": ["string", "null"]
+          },
+          "appliedAt": {
+            "type": ["string", "null"]
+          }
+        },
+        "required": [
+          "approvalStatus",
+          "costPrice",
+          "newPrice",
+          "proposalDate",
+          "proposalId",
+          "updateStatus"
+        ]
+      },
+      "MultiSupplierProduct": {
+        "type": "object",
+        "properties": {
+          "cscartProductId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productName": {
+            "type": "string"
+          },
+          "currentPrice": {
+            "type": ["number", "null"]
+          },
+          "quotes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupplierQuote"
+            }
+          }
+        },
+        "required": ["cscartProductId", "productName", "quotes"]
+      },
+      "PageResultMultiSupplierProduct": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MultiSupplierProduct"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SupplierQuote": {
+        "type": "object",
+        "properties": {
+          "supplierName": {
+            "type": "string"
+          },
+          "costPrice": {
+            "type": "number"
+          },
+          "proposedPrice": {
+            "type": "number"
+          },
+          "proposalDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "proposalId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": ["costPrice", "proposalDate", "proposalId", "proposedPrice", "supplierName"]
+      },
+      "FailureSummary": {
+        "type": "object",
+        "properties": {
+          "proposalsWithFailures": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalFailedItems": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": ["proposalsWithFailures", "totalFailedItems"]
+      },
+      "CategorySuggestionsResponse": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["categories"]
+      },
+      "CategoryStat": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "occurrences": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lastSeenAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["category", "lastSeenAt", "occurrences"]
+      },
+      "UnmatchedCategoriesResult": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryStat"
+            }
+          },
+          "defaultMarginPct": {
+            "type": ["number", "null"]
+          }
+        },
+        "required": ["categories"]
+      },
+      "DistributionPriceTierListResponse": {
+        "type": "object",
+        "description": "Grouped distribution pricing tiers derived from Acumatica customer accounts",
+        "properties": {
+          "tiers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DistributionPriceTierResponse"
+            }
+          }
+        }
+      },
+      "DistributionPriceTierResponse": {
+        "type": "object",
+        "description": "Single effective pricing tier with all attached customer accounts",
+        "properties": {
+          "tierCode": {
+            "type": "string"
+          },
+          "tierSource": {
+            "type": "string"
+          },
+          "customerCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customerClasses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "priceClassIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "customerIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "parentRecords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "OrderListResponse": {
+        "type": "object",
+        "description": "Paginated list of sales orders from Acumatica ERP",
+        "properties": {
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderSummaryResponse"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
+        }
+      },
+      "OrderSummaryResponse": {
+        "type": "object",
+        "description": "Summary view of a single sales order",
+        "properties": {
+          "orderNbr": {
+            "type": "string"
+          },
+          "orderType": {
+            "type": ["string", "null"]
+          },
+          "status": {
+            "type": ["string", "null"]
+          },
+          "customerId": {
+            "type": ["string", "null"]
+          },
+          "customerName": {
+            "type": ["string", "null"]
+          },
+          "orderTotal": {
+            "type": ["number", "null"]
+          },
+          "date": {
+            "type": ["string", "null"]
+          },
+          "workflowStatus": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/OrderWorkflowStatusResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "OrderWorkflowStatusResponse": {
+        "type": "object",
+        "description": "Internal YourMix warehouse and delivery workflow state overlaid on top of an Acumatica sales order",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          },
+          "notes": {
+            "type": ["string", "null"]
+          }
+        }
+      },
+      "OrderDetailResponse": {
+        "type": "object",
+        "description": "Full details of a single sales order including line items",
+        "properties": {
+          "orderNbr": {
+            "type": "string"
+          },
+          "orderType": {
+            "type": ["string", "null"]
+          },
+          "status": {
+            "type": ["string", "null"]
+          },
+          "customerId": {
+            "type": ["string", "null"]
+          },
+          "customerName": {
+            "type": ["string", "null"]
+          },
+          "orderTotal": {
+            "type": ["number", "null"]
+          },
+          "date": {
+            "type": ["string", "null"]
+          },
+          "description": {
+            "type": ["string", "null"]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderLineItemResponse"
+            }
+          },
+          "workflowStatus": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/OrderWorkflowStatusResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "OrderLineItemResponse": {
+        "type": "object",
+        "description": "Line item within a sales order",
+        "properties": {
+          "inventoryId": {
+            "type": ["string", "null"]
+          },
+          "description": {
+            "type": ["string", "null"]
+          },
+          "quantity": {
+            "type": ["number", "null"],
+            "format": "double"
+          },
+          "unitPrice": {
+            "type": ["number", "null"]
+          },
+          "lineTotal": {
+            "type": ["number", "null"]
+          },
+          "uom": {
+            "type": ["string", "null"]
+          }
+        }
+      },
+      "DistributionCustomerListResponse": {
+        "type": "object",
+        "description": "Distribution customer pricing accounts derived from Acumatica customers",
+        "properties": {
+          "customers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DistributionCustomerPricingAccountResponse"
+            }
+          }
+        }
+      },
+      "DistributionCustomerPricingAccountResponse": {
+        "type": "object",
+        "description": "Distribution customer account with effective pricing tier derived from Acumatica fields",
+        "properties": {
+          "customerId": {
+            "type": "string"
+          },
+          "customerName": {
+            "type": ["string", "null"]
+          },
+          "customerClass": {
+            "type": ["string", "null"]
+          },
+          "priceClassId": {
+            "type": ["string", "null"]
+          },
+          "parentRecord": {
+            "type": ["string", "null"]
+          },
+          "terms": {
+            "type": ["string", "null"]
+          },
+          "shippingBranch": {
+            "type": ["string", "null"]
+          },
+          "email": {
+            "type": ["string", "null"]
+          },
+          "status": {
+            "type": ["string", "null"]
+          },
+          "effectivePriceTierCode": {
+            "type": "string"
+          },
+          "effectivePriceTierSource": {
+            "type": "string"
+          }
+        }
+      },
+      "VendorListResponse": {
+        "type": "object",
+        "properties": {
+          "vendors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VendorResponse"
+            }
+          }
+        },
+        "required": ["vendors"]
+      },
+      "VendorResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name", "status"]
+      },
+      "ProductListResponse": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductResponse"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": ["page", "pageSize", "products", "totalItems"]
+      },
+      "ProductResponse": {
+        "type": "object",
+        "properties": {
+          "cscartProductId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "sku": {
+            "type": ["string", "null"]
+          },
+          "currentPrice": {
+            "type": "number"
+          },
+          "listPrice": {
+            "type": ["number", "null"]
+          },
+          "costPrice": {
+            "type": ["number", "null"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["ACTIVE", "HIDDEN", "DISABLED"]
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "stockLevel": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "mainImageUrl": {
+            "type": ["string", "null"]
+          },
+          "mainImageWidth": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "mainImageHeight": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "vendorId": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "weight": {
+            "type": ["number", "null"]
+          },
+          "trackingMode": {
+            "type": ["string", "null"]
+          },
+          "minQty": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "maxQty": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "qtyStep": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "basePrice": {
+            "type": ["number", "null"]
+          },
+          "freeShipping": {
+            "type": "boolean"
+          },
+          "botswanaMade": {
+            "type": "boolean"
+          },
+          "sameDayDelivery": {
+            "type": "boolean"
+          },
+          "seoName": {
+            "type": ["string", "null"]
+          },
+          "seoPath": {
+            "type": ["string", "null"]
+          },
+          "createdAt": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "outOfStockActions": {
+            "type": ["string", "null"]
+          },
+          "shortDescription": {
+            "type": ["string", "null"]
+          },
+          "fullDescription": {
+            "type": ["string", "null"]
+          },
+          "shippingFreight": {
+            "type": ["number", "null"]
+          },
+          "productType": {
+            "type": ["string", "null"]
+          },
+          "parentProductId": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "averageRating": {
+            "type": ["number", "null"]
+          },
+          "ageVerification": {
+            "type": "boolean"
+          },
+          "ageLimit": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "length": {
+            "type": ["number", "null"]
+          },
+          "width": {
+            "type": ["number", "null"]
+          },
+          "height": {
+            "type": ["number", "null"]
+          },
+          "mainCategoryId": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "storefrontStatus": {
+            "type": "string",
+            "enum": ["REACHABLE", "UNREACHABLE", "HIDDEN", "DISABLED"]
+          },
+          "availabilityIssues": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "VENDOR_INACTIVE",
+                "CATEGORY_DISABLED",
+                "ORPHAN_VARIATION",
+                "ZERO_PRICE",
+                "VIEW_ONLY",
+                "OOS_BLOCKED"
+              ]
+            }
+          },
+          "vendorName": {
+            "type": ["string", "null"]
+          },
+          "vendorStatus": {
+            "type": ["string", "null"]
+          },
+          "mainCategoryName": {
+            "type": ["string", "null"]
+          },
+          "mainCategoryStatus": {
+            "type": ["string", "null"]
+          },
+          "discount": {
+            "type": "boolean"
+          },
+          "identityStatus": {
+            "type": "string",
+            "enum": ["MATCHED", "AMBIGUOUS", "UNMAPPED"]
+          }
+        },
+        "required": [
+          "botswanaMade",
+          "categoryIds",
+          "cscartProductId",
+          "currentPrice",
+          "freeShipping",
+          "name",
+          "sameDayDelivery",
+          "status"
+        ]
+      },
+      "ProductSummaryResponse": {
+        "type": "object",
+        "properties": {
+          "totalProducts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "storefrontCounts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "issueCounts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "avgMarginPct": {
+            "type": ["number", "null"]
+          },
+          "mostRecentUpdate": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "duplicateSkus": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "categoryMedianPrices": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "categoryMedianPrices",
+          "duplicateSkus",
+          "issueCounts",
+          "storefrontCounts",
+          "totalProducts"
+        ]
+      },
+      "CatalogIdentityProjectionListResponse": {
+        "type": "object",
+        "description": "Paginated catalog identity projection for the provisional Acumatica InventoryID ↔ catalog SKU join",
+        "properties": {
+          "identities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CatalogIdentityProjectionResponse"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": ["identities", "page", "pageSize", "totalItems"]
+      },
+      "CatalogIdentityProjectionResponse": {
+        "type": "object",
+        "description": "Explicit backend-owned catalog identity row based on the current provisional SKU join rule",
+        "properties": {
+          "cscartProductId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productName": {
+            "type": "string"
+          },
+          "catalogSku": {
+            "type": "string"
+          },
+          "provisionalAcumaticaInventoryId": {
+            "type": "string"
+          },
+          "productStatus": {
+            "type": "string",
+            "enum": ["ACTIVE", "HIDDEN", "DISABLED"]
+          },
+          "mappingRule": {
+            "type": "string"
+          },
+          "verificationStatus": {
+            "type": "string"
+          },
+          "catalogSkuOccurrenceCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ambiguous": {
+            "type": "boolean"
+          },
+          "catalogUpdatedAt": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "ambiguous",
+          "catalogSku",
+          "catalogSkuOccurrenceCount",
+          "cscartProductId",
+          "mappingRule",
+          "productName",
+          "productStatus",
+          "provisionalAcumaticaInventoryId",
+          "verificationStatus"
+        ]
+      },
+      "CatalogIdentityProjectionSummaryResponse": {
+        "type": "object",
+        "description": "Summary of the current backend-owned catalog identity projection built from the provisional SKU join rule",
+        "properties": {
+          "totalProjectedRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "provisionalRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ambiguousRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "distinctCatalogSkus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productStatusCounts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "required": [
+          "ambiguousRows",
+          "distinctCatalogSkus",
+          "productStatusCounts",
+          "provisionalRows",
+          "totalProjectedRows"
+        ]
+      },
+      "CategoryListResponse": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryResponse"
+            }
+          }
+        },
+        "required": ["categories"]
+      },
+      "CategoryResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "parentId": {
+            "type": ["integer", "null"],
+            "format": "int32"
+          },
+          "level": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seoName": {
+            "type": ["string", "null"]
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "level", "name", "productCount", "status"]
+      },
+      "AuditLogResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "entityType": {
+            "type": "string"
+          },
+          "entityId": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          },
+          "userId": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          },
+          "oldValue": {
+            "type": ["object", "null"],
+            "additionalProperties": {}
+          },
+          "newValue": {
+            "type": ["object", "null"],
+            "additionalProperties": {}
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        },
+        "required": ["action", "createdAt", "domain", "entityType", "id"]
+      },
+      "AuditPageResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditLogResponse"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": ["content", "page", "size", "totalElements", "totalPages"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

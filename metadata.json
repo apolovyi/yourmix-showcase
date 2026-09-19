@@ -1,0 +1,7 @@
+{
+  "name": "Your Mix Distribution OS",
+  "description": "A comprehensive operational management system for alcoholic beverage distribution, featuring inventory tracking, order processing, and Gemini-powered analytics for supply chain optimization.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

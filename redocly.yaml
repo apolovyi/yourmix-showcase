@@ -1,0 +1,15 @@
+apis:
+  main:
+    root: src/generated/openapi.json
+    x-openapi-ts:
+      output: src/generated/api.d.ts
+
+rules:
+  no-unresolved-refs: error
+  no-enum-type-mismatch: error
+  no-path-trailing-slash: error
+  path-not-include-query: error
+  operation-operationId: warn
+  operation-summary: off
+  tag-description: off
+  info-license: off

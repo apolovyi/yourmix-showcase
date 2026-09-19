@@ -1,0 +1,4 @@
+# Global fleet gates (chained; no-op on machines without ~/.claude/git-hooks)
+if [ -x "$HOME/.claude/git-hooks/pre-push" ]; then
+  "$HOME/.claude/git-hooks/pre-push" "$@" || exit 1
+fi
